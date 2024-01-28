@@ -344,6 +344,39 @@ class CalculatorTests {
     }
 
     @ParameterizedTest
+    @DisplayName("Проверка сохранения введенных чисел в полях ввода после переворота экрана")
+    @MethodSource("CalculatorTestData#provideTestDataForMinimizeAndRestoreTest")
+    fun testInputPersistenceAfterScreenRotation(firstNumber: String, secondNumber: String) {
+        val originalOrientation = driver.orientation
+        try {
+            calculatorPage.enterFirstNumber(firstNumber)
+            calculatorPage.enterSecondNumber(secondNumber)
+            driver.rotate(ScreenOrientation.LANDSCAPE)
+            val firstNumberAfterRotation = calculatorPage.getFirstNumber()
+            val secondNumberAfterRotation = calculatorPage.getSecondNumber()
+            assertAll("Проверка сохранения ввода после переворота экрана",
+                {
+                    Assertions.assertEquals(
+                        firstNumber,
+                        firstNumberAfterRotation,
+                        "Первое число изменилось после переворота экрана"
+                    )
+                },
+                {
+                    Assertions.assertEquals(
+                        secondNumber,
+                        secondNumberAfterRotation,
+                        "Второе число изменилось после переворота экрана"
+                    )
+                }
+            )
+        } finally {
+            driver.rotate(originalOrientation)
+        }
+    }
+
+
+    @ParameterizedTest
     @DisplayName("Тестирование сохранения результата после переворота экрана")
     @MethodSource("CalculatorTestData#provideTestDataForMinimizeAndRestoreTest")
     fun testResultPersistsAfterScreenRotation(firstNumber: String, secondNumber: String) {
