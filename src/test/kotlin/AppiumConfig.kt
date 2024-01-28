@@ -7,8 +7,10 @@ object AppiumConfig {
 
     private const val APP_PATH = "/Users/admin/Downloads/Telegram Desktop/app-debug.apk"
     private const val PLATFORM_NAME = "Android"
-    private const val DEVICE_NAME = "Антон"
+    private const val DEVICE_NAME = "emulator-5554"
     private const val AUTOMATION_NAME = "UiAutomator2"
+    private const val LANGUAGE = "ru"
+    private const val LOCALE = "RU"
 
     fun createCapabilities(): DesiredCapabilities {
         return DesiredCapabilities().apply {
@@ -16,6 +18,8 @@ object AppiumConfig {
             setCapability(MobileCapabilityType.DEVICE_NAME, DEVICE_NAME)
             setCapability(MobileCapabilityType.APP, APP_PATH)
             setCapability(MobileCapabilityType.AUTOMATION_NAME, AUTOMATION_NAME)
+            setCapability(MobileCapabilityType.LANGUAGE, LANGUAGE)
+            setCapability(MobileCapabilityType.LOCALE, LOCALE)
         }
     }
 }
