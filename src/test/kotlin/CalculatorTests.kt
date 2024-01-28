@@ -37,6 +37,50 @@ class CalculatorTests {
         calculatorPage = CalculatorPage(driver)
     }
 
+    @Test
+    @DisplayName("Проверка наличия основных элементов пользовательского интерфейса")
+    fun testPresenceOfUIElements() {
+        assertAll(
+            "Проверка наличия всех элементов UI",
+            { Assertions.assertTrue(calculatorPage.firstNumberInput.isDisplayed, "Первое поле ввода отсутствует") },
+            { Assertions.assertTrue(calculatorPage.secondNumberInput.isDisplayed, "Второе поле ввода отсутствует") },
+            { Assertions.assertTrue(calculatorPage.plusButton.isDisplayed, "Кнопка сложения отсутствует") },
+            { Assertions.assertTrue(calculatorPage.minusButton.isDisplayed, "Кнопка вычитания отсутствует") },
+            { Assertions.assertTrue(calculatorPage.multiplyButton.isDisplayed, "Кнопка умножения отсутствует") },
+            { Assertions.assertTrue(calculatorPage.divideButton.isDisplayed, "Кнопка деления отсутствует") },
+            { Assertions.assertTrue(calculatorPage.resetButton.isDisplayed, "Кнопка сброса отсутствует") },
+            { Assertions.assertTrue(calculatorPage.resultText.isDisplayed, "Поле для вывода результата отсутствует") },
+        )
+    }
+
+    @Test
+    @DisplayName("Проверка начальных значений элементов интерфейса")
+    fun testInitialValuesOfUIElements() {
+        assertAll("Проверка начальных значений UI",
+            {
+                Assertions.assertEquals(
+                    EMPTY_STRING,
+                    calculatorPage.firstNumberInput.text,
+                    "Неверное начальное значение первого поля ввода"
+                )
+            },
+            {
+                Assertions.assertEquals(
+                    EMPTY_STRING,
+                    calculatorPage.secondNumberInput.text,
+                    "Неверное начальное значение второго поля ввода"
+                )
+            },
+            {
+                Assertions.assertEquals(
+                    EMPTY_STRING,
+                    calculatorPage.resultText.text,
+                    "Неверное начальное значение поля результата"
+                )
+            }
+        )
+    }
+
     @Tag("basic")
     @ParameterizedTest
     @DisplayName("Тестирование сложения с обычными числами")
@@ -317,7 +361,6 @@ class CalculatorTests {
         } finally {
             driver.rotate(originalOrientation)
         }
-
     }
 
     @ParameterizedTest
