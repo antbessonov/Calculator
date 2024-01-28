@@ -1,6 +1,19 @@
+import io.appium.java_client.AppiumDriver
+import io.appium.java_client.MobileElement
 import org.junit.jupiter.api.Assertions
+import java.net.URL
 
 object TestUtils {
+
+    fun setupDriver(): AppiumDriver<MobileElement> {
+        val url = URL(AppiumConfig.URL)
+        val caps = AppiumConfig.createCapabilities()
+        return AppiumDriver(url, caps)
+    }
+
+    fun tearDownDriver(driver: AppiumDriver<MobileElement>) {
+        driver.quit()
+    }
 
     fun performArithmeticTest(
         calculatorPage: CalculatorPage,
